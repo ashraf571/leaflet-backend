@@ -7,6 +7,10 @@ import { PakistanProvincesModule } from './pakistan_provinces/pakistan_provinces
 
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import { FacilityModule } from './facility/facility.module';
+import { LevelModule } from './level/level.module';
+import { UnitModule } from './unit/unit.module';
+
 
 
 @Module({
@@ -30,9 +34,12 @@ import { UserModule } from './user/user.module';
     }),
     PakistanBoundryModule,
     PakistanProvincesModule,
-    UserModule
+    UserModule,
+    FacilityModule,
+    LevelModule,
+    UnitModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
