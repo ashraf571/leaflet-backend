@@ -5,16 +5,21 @@ import { UpdateLevelDto } from './dto/update-level.dto';
 
 @Controller('level')
 export class LevelController {
-  constructor(private readonly levelService: LevelService) {}
+  constructor(private readonly levelService: LevelService) { }
 
-  @Post()
-  create(@Body() createLevelDto: CreateLevelDto) {
-    return this.levelService.create(createLevelDto);
-  }
+  // @Post()
+  // create(@Body() createLevelDto: CreateLevelDto) {
+  //   return this.levelService.create(createLevelDto);
+  // }
 
   @Get()
   findAll() {
     return this.levelService.findAll();
+  }
+
+  @Get('units/:levelNumber')
+  findAllFacilitiesLevels(@Param('levelNumber') levelNumber: string) {
+    return this.levelService.findAllFacilitiesLevels(+levelNumber);
   }
 
   @Get(':id')

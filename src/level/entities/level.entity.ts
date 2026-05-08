@@ -13,7 +13,7 @@ import {
 import { Facility } from '../../facility/entities/facility.entity';
 import { Unit } from '../../unit/entities/unit.entity';
 
-@Entity('levels')
+@Entity({ name: 'level', schema: 'cbd-buildings' })
 export class Level {
     @PrimaryGeneratedColumn()
     id: number;
@@ -36,7 +36,25 @@ export class Level {
 
 
     @Column({ type: 'int' })
-    level_number: number;
+    level: number;
+
+    @Column({ type: 'varchar' })
+    description: string;
+
+    @Column({ type: 'varchar' })
+    areaunit: string;
+
+    @Column({ nullable: true })
+    totalarea: number;
+
+    @Column({ nullable: true })
+    numberofstairs: number;
+
+    @Column({ nullable: true })
+    numberofelevators: number;
+
+    @Column({ nullable: true, type: 'varchar' })
+    dimensions: string;
 
     @Column({ nullable: true })
     color: string;

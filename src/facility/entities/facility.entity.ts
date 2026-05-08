@@ -9,7 +9,8 @@ import {
 } from 'typeorm';
 import { Level } from '../../level/entities/level.entity';
 
-@Entity('facilities')
+@Entity({ name: 'facility', schema: 'cbd-buildings' })
+
 export class Facility {
     @PrimaryGeneratedColumn()
     facility_id: number;
@@ -42,8 +43,8 @@ export class Facility {
     })
     type: string;
 
-    @Column({ type: 'int', default: 0 })
-    elevators: number;
+    @Column({ type: 'varchar', default: '#000000' })
+    color: string;
 
     @Column({ nullable: true })
     dimensions: string;

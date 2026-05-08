@@ -11,7 +11,8 @@ import {
 
 import { Level } from '../../level/entities/level.entity';
 
-@Entity('units')
+@Entity({ name: 'unit', schema: 'cbd-buildings' })
+
 export class Unit {
     @PrimaryGeneratedColumn()
     id: string;
@@ -48,6 +49,18 @@ export class Unit {
 
     @Column({ type: 'text', nullable: true })
     description: string;
+
+    @Column({ nullable: true })
+    numberofshops: number;
+
+    @Column({ nullable: true })
+    numberofstairs: number;
+
+    @Column({ nullable: true })
+    numberofoffices: number;
+
+    @Column({ nullable: true })
+    numberofelevators: number;
 
     @Column({ nullable: true })
     color: string;
