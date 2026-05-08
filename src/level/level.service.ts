@@ -48,20 +48,23 @@ export class LevelService {
       areaunit: level.areaunit,
       dimensions: level.dimensions,
       description: level.description,
-      units: this.unitToGeoJSON(level.units as Unit[])
     }
   }
 
   private toGeoJSON(rows: any[]) {
     return {
-      type: "FeatureCollection",
-      name: "level-geojson",
+      levels: {
+        type: "FeatureCollection",
+        name: "level-geojson",
 
-      features: rows.map((row) => ({
-        type: "Feature",
-        properties: this.levelProperties(row),
-        geometry: row.geometry,
-      })),
+        features: rows.map((row) => ({
+          type: "Feature",
+          properties: this.levelProperties(row),
+          geometry: row.geometry,
+        }))
+      },
+
+      units: this.unitToGeoJSON(rows.flatMap((row: any) => row.units || [])),
 
 
     };
