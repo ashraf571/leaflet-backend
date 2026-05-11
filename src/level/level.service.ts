@@ -20,6 +20,7 @@ export class LevelService {
       color: unit.color,
       title: unit.title,
       area: unit.area,
+      levelRef: unit.level_id,
       areaunit: unit.areaunit,
       dimensions: unit.dimensions,
       description: unit.description,
@@ -42,6 +43,7 @@ export class LevelService {
   private levelProperties(level: Level) {
     return {
       id: level.id,
+      level: level.level,
       color: level.color,
       title: level.level_name,
       area: level.totalarea,
@@ -96,6 +98,7 @@ export class LevelService {
                     'color', u.color,
                     'title', u.title,
                     'area', u.area,
+                    'level_id', u.level_id,
                     'areaunit', u.areaunit,
                     'dimensions', u.dimensions,
                     'description', u.description,
@@ -138,8 +141,71 @@ export class LevelService {
     return this.toGeoJSON(levels);
   }
 
-  findAll() {
-    return `This action returns all level`;
+  async findAll() {
+    const levels = await this.levelRepository.query(
+      `
+    SELECT
+        l.id,
+        l.level,
+        l.level_name,
+        l.facility_id,
+        l.color,
+        l.totalarea,
+        l.areaunit,
+        l.dimensions,
+        l.elevations,
+        l.description,
+        l.geom,
+
+        -- Level geometry as GeoJSON
+        ST_AsGeoJSON(l.geom::geometry)::json AS geometry,
+
+        -- Units array
+        COALESCE(
+            jsonb_agg(
+                DISTINCT jsonb_build_object(
+                    'id', u.id,
+                    'color', u.color,
+                    'title', u.title,
+                    'area', u.area,
+                    'level_id', u.level_id,
+                    'areaunit', u.areaunit,
+                    'dimensions', u.dimensions,
+                    'description', u.description,
+
+                    -- Unit geometry as GeoJSON
+                    'geometry',
+                    CASE
+                        WHEN u.geom IS NOT NULL
+                        THEN ST_AsGeoJSON(u.geom::geometry)::json
+                        ELSE NULL
+                    END
+                )
+            ) FILTER (WHERE u.id IS NOT NULL),
+            '[]'::jsonb
+        ) AS units
+
+    FROM "cbd-buildings".level l
+
+    LEFT JOIN "cbd-buildings".unit u
+        ON l.id = u.level_id
+
+    GROUP BY
+        l.id,
+        l.level,
+        l.level_name,
+        l.facility_id,
+        l.color,
+        l.totalarea,
+        l.areaunit,
+        l.dimensions,
+        l.elevations,
+        l.description,
+        l.geom
+    `,
+    );
+
+    return this.toGeoJSON(levels);
   }
 
   findOne(id: number) {
