@@ -19,20 +19,12 @@ export class FacilityService {
   private facilityProperties(facility: Facility) {
     return {
       id: facility.facility_id,
-      title: facility.name,
-      area: facility.totalarea,
-      numberoffloors: facility.numberoffloors,
-      numberofoffices: facility.numberofoffices,
-      numberofshops: facility.numberofshops,
-      areaunit: facility.areaunit,
-      description: facility.description,
-      dimensions: facility.dimensions,
-      elevations: facility.elevations,
-      // stairs: facility.stairs,
-      // type: facility.type,
-      // areaunit: level.areaunit,
-      // dimensions: level.dimensions,
-      // description: level.description,
+      price_m: facility.price_m,
+      phases: facility.phases,
+      sub_phase: facility.sub_phase,
+      type: facility.type,
+      no: facility.no,
+      area: facility.area,
     }
   }
 
@@ -54,17 +46,9 @@ export class FacilityService {
     const facilites = await this.facilityRepository.query(
       `
       SELECT
-        name,
-        numberoffloors,
-        numberofoffices,
-        numberofshops,
-        totalarea,
-        areaunit,
-        dimensions,
-        elevations,
-        description,
+        price_m,phases,sub_phase,type,no,area,
         ST_AsGeoJSON(geom)::json AS geometry
-      FROM "cbd-buildings".facility;
+      FROM "cbd-schema".facility;
     `
     );
     return this.toGeoJSON(facilites);

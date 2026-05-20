@@ -11,7 +11,7 @@ import {
 
 import { Level } from '../../level/entities/level.entity';
 
-@Entity({ name: 'unit', schema: 'cbd-buildings' })
+@Entity({ name: 'unit', schema: 'cbd-schema' })
 
 export class Unit {
     @PrimaryGeneratedColumn()

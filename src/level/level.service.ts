@@ -46,9 +46,9 @@ export class LevelService {
       level: level.level,
       color: level.color,
       title: level.level_name,
-      area: level.totalarea,
+      area: level.area,
       areaunit: level.areaunit,
-      dimensions: level.dimensions,
+      dimentions: level.dimentions,
       description: level.description,
     }
   }
@@ -78,12 +78,10 @@ export class LevelService {
         l.id,
         l.level,
         l.level_name,
-        l.facility_id,
         l.color,
-        l.totalarea,
+        l.area,
         l.areaunit,
-        l.dimensions,
-        l.elevations,
+        l.dimentions,
         l.description,
         l.geom,
 
@@ -115,9 +113,9 @@ export class LevelService {
             '[]'::jsonb
         ) AS units
 
-    FROM "cbd-buildings".level l
+    FROM "cbd-schema".level l
 
-    LEFT JOIN "cbd-buildings".unit u
+    LEFT JOIN "cbd-schema".unit u
         ON l.id = u.level_id
 
     WHERE l.level = $1
@@ -126,12 +124,10 @@ export class LevelService {
         l.id,
         l.level,
         l.level_name,
-        l.facility_id,
         l.color,
-        l.totalarea,
+        l.area,
         l.areaunit,
-        l.dimensions,
-        l.elevations,
+        l.dimentions,
         l.description,
         l.geom
     `,
@@ -148,12 +144,10 @@ export class LevelService {
         l.id,
         l.level,
         l.level_name,
-        l.facility_id,
         l.color,
-        l.totalarea,
+        l.area,
         l.areaunit,
-        l.dimensions,
-        l.elevations,
+        l.dimentions,
         l.description,
         l.geom,
 
@@ -185,21 +179,19 @@ export class LevelService {
             '[]'::jsonb
         ) AS units
 
-    FROM "cbd-buildings".level l
+    FROM "cbd-schema".level l
 
-    LEFT JOIN "cbd-buildings".unit u
+    LEFT JOIN "cbd-schema".unit u
         ON l.id = u.level_id
 
     GROUP BY
         l.id,
         l.level,
         l.level_name,
-        l.facility_id,
         l.color,
-        l.totalarea,
+        l.area,
         l.areaunit,
-        l.dimensions,
-        l.elevations,
+        l.dimentions,
         l.description,
         l.geom
     `,
