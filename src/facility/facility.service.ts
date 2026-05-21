@@ -25,6 +25,11 @@ export class FacilityService {
       type: facility.type,
       no: facility.no,
       area: facility.area,
+      far: facility.far,
+      floors: facility.floors,
+      area_marla: facility.area_marla,
+      area_kanal: facility.area_kanal,
+      area_sq_ft: facility.area_sq_ft
     }
   }
 
@@ -46,7 +51,7 @@ export class FacilityService {
     const facilites = await this.facilityRepository.query(
       `
       SELECT
-        price_m,phases,sub_phase,type,no,area,
+        price_m,phases,sub_phase,type,no,area, far, floors,area_marla, area_kanal, area_sq_ft,
         ST_AsGeoJSON(geom)::json AS geometry
       FROM "cbd-schema".facility;
     `

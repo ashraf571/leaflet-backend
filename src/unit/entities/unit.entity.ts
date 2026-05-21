@@ -23,8 +23,12 @@ export class Unit {
     @ManyToOne(() => Level, (level) => level.units, {
         onDelete: 'CASCADE',
     })
+
     @JoinColumn({ name: 'level_id' })
-    level: Level;
+    levelId: Level;
+
+    @Column({})
+    level: number;
 
     @Column({
         comment: 'shop, office, stairs, etc',

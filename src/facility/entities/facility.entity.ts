@@ -16,35 +16,50 @@ export class Facility {
     facility_id: number;
 
     @Column()
-    name: string;
+    name!: string;
 
     @Column()
-    no: number;
+    no!: number;
 
     @Column()
-    area: number;
+    area!: number;
 
 
     @Column({
         type: 'varchar',
         length: 100,
     })
-    type: string;
+    type!: string;
 
     @Column({ type: 'varchar', default: '#000000' })
-    color: string;
+    color!: string;
 
     @Column({ type: 'float', nullable: true })
-    price_m: number;
+    price_m!: number;
 
     @Column({ type: 'varchar', nullable: true })
-    phases: string;
+    far!: string;
+
+    @Column({ type: 'float', nullable: true })
+    floors!: number;
 
     @Column({ type: 'varchar', nullable: true })
-    sub_phase: string;
+    phases!: string;
+
+    @Column({ type: 'varchar', nullable: true })
+    sub_phase!: string;
+
+    @Column({ type: 'float', nullable: true })
+    area_marla!: number;
+
+    @Column({ type: 'float', nullable: true })
+    area_kanal!: number;
+
+    @Column({ type: 'float', nullable: true })
+    area_sq_ft!: number;
 
     @Column({ type: 'text', nullable: true })
-    description: string;
+    description!: string;
 
     // GeoJSON Geometry
     @Column({ type: 'varchar' })
@@ -53,11 +68,5 @@ export class Facility {
     @OneToMany(() => Level, (level) => level.facility, {
         cascade: true,
     })
-    levels: Level[];
-
-    @CreateDateColumn()
-    createdAt: Date;
-
-    @UpdateDateColumn()
-    updatedAt: Date;
+    levels!: Level[];
 }
